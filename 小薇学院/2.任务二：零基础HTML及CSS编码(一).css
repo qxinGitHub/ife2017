@@ -74,7 +74,7 @@ body>div{
 	font-weight: 600;
 }
 table{
-	width: 96%;
+	width: 100%;
 	font-size: .8em;
 	border-spacing: 0px;
 	border: none;
@@ -124,6 +124,7 @@ textarea{
 	border: none;
 	border-radius: 10px;
 	margin: 15px auto;
+	cursor: pointer;
 }
 
 /*版权*/
