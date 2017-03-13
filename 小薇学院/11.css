@@ -1,0 +1,169 @@
+body,ul,li,p{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background-color: #EEEEEE;
+}
+.wrap{
+	background-color: #F5F5F5;
+	max-width: 540px;
+	margin: 0 auto;
+}
+.wrap>div:not(:first-child){
+	background-color: #fff;
+}
+/* 头部 */
+.header{
+	/*width: 60px;*/
+	height: 50px;
+	background-color: #91D4DA;
+	color: #fff;
+	font-size: 1.4em;
+	line-height: 50px;
+	text-align: center;
+}
+.header .back{
+	float: left;
+	position: absolute;
+}
+.header .back i{
+	vertical-align: top;
+	font-size: 1.8em;
+}
+/* 导航*/
+.nav ul{
+	height: 50px;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	line-height: 50px;
+}
+li{
+	display: inline-block;
+	width: 20%;
+}
+li.active{
+	border-bottom: 3px solid #91D4DA;
+}
+
+/* banner */
+.banner{
+	background: #fff url(http://imgsrc.baidu.com/forum/w%3D580/sign=ca1ed79ed5160924dc25a213e405359b/6aa94f510fb30f243e445ccbcd95d143ac4b0338.jpg) center no-repeat;
+	background-size: cover;
+	height: 200px;
+}
+
+/* label */
+.label{
+	padding: 20px;
+	text-align: center;
+}
+.label-item{
+	border-bottom: 1px solid #eee;
+	margin-bottom: 10px;
+}
+.label-item>div{
+	display: inline-block;
+	width: 18%;
+	line-height: 26px;
+}
+.label-item img{
+	width: 80%;
+	border-radius: 50%;
+}
+
+.label-bottom>div{
+	display: inline-block;
+	width: 30%;
+	font-size: 1em;
+}
+.label-bottom>div:not(:last-child){
+	border-right:1px solid #eee;
+}
+.label-bottom img{
+	width: 80%;
+}
+.label-bottom p:nth-of-type(1){
+	font-size: 1.1em;
+}
+
+/* 模块 */
+.module{
+	margin:15px 0; 
+	padding: 10px;
+}
+.module .title{
+	font-size: 1.4em;
+	font-weight: bold;
+	height: 2em;
+	line-height: 2em;
+	color: #464646;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 10px;
+}
+.module img{
+	width: 7em;
+	border: 2px solid #FBD27B;
+	float: left;
+	box-sizing:border-box;
+}
+.module span{
+	width: 30%;
+	display: inline-block;
+	background-color: #F8F8F8;
+	margin: 0 10px 10px;
+	height: 3em;
+	line-height: 3em;
+	text-align: center;
+	font-weight: bold;
+}
+
+.mod2{
+	padding: 10px;
+}
+.mod2 img{
+	width: 8em;
+	height: 6em;  /*不起作用*/
+	float: left;
+	padding-right: 10px;
+	/*position: absolute;*/
+}
+.mod2 .full img{
+	float: none;
+}
+.mod2>div:not([class="full"]){
+	border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	/*display: flex;*/
+}
+.mod2 .title{
+	font-size: 1.4em;
+	line-height: 2em;
+	/*font-weight: bold;*/
+}
+.mod2 .time{
+	/*align-self: flex-end;*/
+	/*vertical-align: flex-start;*/
+	color: #ccc;
+	margin-top: 2em;
+}
+.mod2 .full div{
+	/*text-align: center;*/
+	display: flex;
+	justify-content: space-around;
+}
+.mod2 .full .time{
+	margin-top: .5em;
+}
+
+
+
+
+.clearfix:after{
+	content: " ";
+	display: block;
+	clear: both;
+}
