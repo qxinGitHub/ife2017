@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础JS练习</title>
+	<style>
+		body>span{
+			border: 1px solid #ccc;
+			padding: 2px 8px;
+		}
+		#display{
+			margin:20px 0;
+		}
+		#display>span{
+			background-color: red;
+			color: #fff;
+			margin: 10px;
+			padding: 4px 8px;
+		}
+	</style>
+</head>
+<body>
+	<input type="text">
+	<span id="unshift" class="btn">左侧入</span>
+	<span id="push" class="btn">右侧入</span>
+	|
+	<span id="shift" class="btn">左侧出</span>
+	<span id="pop" class="btn">右侧出</span>
+	<div id="display"></div>
+
+	<p>看到题目,就想到数组的push pop shift unshift,刚好满足题意, 做着做着发现有点小问题</p>
+	<p>方法二: insertbefore appendchild</p>
+
+	<script>
+		function $(ele){
+			return document.querySelector(ele);
+		}
+		function $$(ele){
+			return document.querySelectorAll(ele);
+		}
+
+		function refresh(){
+			var data = "";
+			for(let i=0;i<arr.length;i++){
+				data += "<span>" + arr[i] + "</span>" ;
+			}
+			$("#display").innerHTML = data;
+		}
+
+		var arr=[],
+			btn = $$(".btn"),
+			display = $("#display");
+
+		// console.log(btn);
+		for(let i= 0;i<btn.length;i++){
+			btn[i].addEventListener("click",function(e){
+				var input = $("input").value;
+				if(isNaN(input) || input.trim().length === 0){
+					alert("请输入一个数字!");
+					return 
+				}
+				// console.log(e);
+				var target = e.target;
+				switch(target.id){
+					case "unshift":
+						arr.unshift(input);
+						break;
+					case "push":
+						arr.push(input);
+						break;
+					case "pop":
+						alert(arr.pop(input));
+						break;
+					case "shift":
+						alert(arr.shift(input));
+						break;
+				}
+				// console.log(arr);
+				refresh();
+			})	
+		}
+
+		// 点击删除
+		$("#display").addEventListener("click",function(e){
+			var target = e.target;
+			if(target.nodeName.toLowerCase() === "span"){
+				var index = 0;
+				while(target = target.previousElementSibling){
+					++index;
+				}
+				// console.log(index);
+				arr.splice(index,1);
+				refresh();
+			}
+		})
+
+	</script>
+</body>
+</html>
