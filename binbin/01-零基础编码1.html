@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>任务一:零基础js编码(一)</title>
+</head>
+<body>
+	<label for="">请输入北京今天空气质量:
+		<input type="text" id="aqi-input">
+	</label>
+	<button id="button">确认书写</button>
+	<div>您输入的值是: <span id="aqi-display">尚未录入</span></div>
+
+	<script>
+		function $(ele){
+			return document.querySelector(ele);
+		}
+		(function(){
+			 $("#button").addEventListener("click",function(){
+				$("#aqi-display").innerHTML = $("#aqi-input").value;
+			})
+		})();
+	</script>
+</body>
+</html>
