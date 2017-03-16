@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>零基础编码二</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
   </head>
 <body>
 
-  <h3>空气质量水平</h3>
+  <h3>w污染排名</h3>
   <ul id="aqi-list">
 <!--   
     <li>第一名：福州（样例），10</li>
@@ -41,11 +42,11 @@ var aqiData = [
     aqiData.sort(function(object1,object2){
       // console.log(object1[1],object2);
       if(object1[1]<object2[1]){
-        return -1;
+        return 1;
       }else if(object1[1]>object2[1]){
-        return 1;
+        return -1;
       } else{
-        return 1;
+        return 0;
       }
     })
 
@@ -57,6 +58,7 @@ var aqiData = [
     // 创建并存放li列表
     var lis = "";
     for(let i=0;i<aqiData.length;i++){
+        if (aqiData[i][1]<60) continue;
         var li
         // var li = document.createElement("li");
         li = "<li>" + cnRank[i] + ": " + 
