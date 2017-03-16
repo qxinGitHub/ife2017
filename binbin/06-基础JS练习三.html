@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础JS练习三</title>
+	<style>
+		body>span{
+			border: 1px solid #ccc;
+			padding: 2px 8px;
+		}
+		#display{
+			margin:20px 0;
+		}
+		#display>span{
+			background-color: red;
+			color: #fff;
+			margin: 10px;
+			padding: 4px 8px;
+		}
+		#display .search{
+			color: #fff;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<!-- <input type="text"> -->
+	<textarea name="" id="input" cols="30" rows="10"></textarea>
+	<br>
+	<span id="unshift" class="btn">左侧入</span>
+	<span id="push" class="btn">右侧入</span>
+	|
+	<span id="shift" class="btn">左侧出</span>
+	<span id="pop" class="btn">右侧出</span>
+	<br>
+	<input type="text" id="s"><button id="sbtn">搜索</button>
+	<div id="display"></div>
+
+
+	<script>
+		function $(ele){
+			return document.querySelector(ele);
+		}
+		function $$(ele){
+			return document.querySelectorAll(ele);
+		}
+
+		function refresh(){
+			var data = "";
+			for(let i=0;i<arr.length;i++){
+				data += "<span>" + arr[i] + "</span>" ;
+			}
+			$("#display").innerHTML = data;
+		}
+
+		var arr=[],
+			btn = $$(".btn"),
+			display = $("#display");
+
+		// console.log(btn);
+		for(let i= 0;i<btn.length;i++){
+			btn[i].addEventListener("click",function(e){
+				var input = $("#input").value.trim();
+				var reg = /[\r\n\s,\.]+/g
+				input = input.split(reg);
+				// console.log(input);
+				// console.log(typeof(input));
+				var target = e.target;
+				switch(target.id){
+					case "unshift":
+						for(let i=0;i<input.length;i++)
+							arr.unshift(input[i]);
+						break;
+					case "push":
+						for(let i=0;i<input.length;i++)
+							arr.push(input[i]);
+						break;
+					case "pop":
+						alert(arr.pop(input));
+						break;
+					case "shift":
+						alert(arr.shift(input));
+						break;
+				}
+				// console.log(arr);
+				$("#input").value="";
+				$("#input").focus();
+				refresh();
+			})	
+		}
+
+		// 点击删除
+		$("#display").addEventListener("click",function(e){
+			var target = e.target;
+			target.parentNode.removeChild(target);
+			if(target.nodeName.toLowerCase() === "span"){
+				var index = 0;
+				while(target = target.previousElementSibling){
+					++index;
+				}
+				// console.log(index);
+				arr.splice(index,1);
+				// refresh();
+			}
+		})
+		// 搜索
+		$("#sbtn").addEventListener("click",function(){
+			var s = $("#s").value.trim();
+			var oli = $$("#display span");
+			console.log(s);
+			for(let i=0;i<oli.length;i++){
+				oli[i].className="";
+			}
+
+			for(let i=0;i<arr.length;i++){
+
+				// console.log(arr[i].indexOf(s));
+				// console.log(~arr[i].indexOf(s));
+				// console.log(!~arr[i].indexOf(s));
+				if (~arr[i].indexOf(s)){
+					oli[i].className="search";
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>
