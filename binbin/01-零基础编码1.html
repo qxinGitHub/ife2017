@@ -17,7 +17,9 @@
 		}
 		(function(){
 			 $("#button").addEventListener("click",function(){
-				$("#aqi-display").innerHTML = $("#aqi-input").value;
+				$("#aqi-display").innerHTML = $("#aqi-input").value
+											?$("#aqi-input").value
+											:"你输入的值为空";
 			})
 		})();
 	</script>
