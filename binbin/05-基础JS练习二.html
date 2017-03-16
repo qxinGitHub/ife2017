@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础JS练习</title>
+	<style>
+		body>span{
+			border: 1px solid #ccc;
+			padding: 2px 8px;
+		}
+		#display{
+			margin:20px 0;
+			word-wrap: wrap;
+		}
+		#display>span{
+			display: inline-block;
+			background-color: red;
+			color: #fff;
+			margin: 10px;
+			padding: 4px 8px;
+		}
+		#chart{
+			width: 1000px;
+			height: 120px;
+			border: 1px solid #ccc;
+			display: flex;
+			justify-content: space-around;
+			align-items: flex-end;
+		}
+		#chart span{
+			display: inline-block;
+			width: 10px;
+			background-color: red;
+			margin-right: 2px;
+		}
+		#chart .active{
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<input type="text">
+	<span id="unshift" class="btn">左侧入</span>
+	<span id="push" class="btn">右侧入</span>
+	|
+	<span id="shift" class="btn">左侧出</span>
+	<span id="pop" class="btn">右侧出</span>
+	<span id="sort">排序</span>
+	<span id="random">随机</span>
+	<div id="display"></div>
+	<div id="chart"></div>
+
+	<p>看到题目,就想到数组的push pop shift unshift,刚好满足题意, 做着做着发现有点小问题</p>
+	<p>方法二: insertbefore appendchild removeChild</p>
+	<p> -- 做到 task5 才发现麻烦大了</p>
+
+	<script>
+		function $(ele){
+			return document.querySelector(ele);
+		}
+		function $$(ele){
+			return document.querySelectorAll(ele);
+		}
+
+		function refresh(){
+			var data = "";
+			for(let i=0;i<arr.length;i++){
+				data += "<span>" + arr[i] + "</span>" ;
+			}
+			$("#display").innerHTML = data;
+			// sort();
+			refreshChart()
+		}
+		function refreshChart(){
+			var data = "";
+			for(let i=0;i<arr.length;i++){
+				data += "<span style='height:" + arr[i] + "px' title='" + arr[i]+ "'></span>" ;
+			}
+			$("#chart").innerHTML = data;
+		}
+
+		var arr=[],
+			btn = $$(".btn"),
+			display = $("#display");
+
+		// 输入和输出事件
+		for(let i= 0;i<btn.length;i++){
+			btn[i].addEventListener("click",function(e){
+				var input = $("input").value;
+				if(isNaN(input) || input.trim().length === 0){
+					alert("请输入一个数字!");
+					return 
+				}else if(input>100 || input<10){
+					alert("请输入一个 10 - 100 范围的数字");
+					return
+				}else if(arr.length>=60){
+					alert("队列元素数量最多限制为60个，当超过60个时，添加元素时alert出提示");
+					return;
+				}
+				// console.log(e);
+				input = parseInt(input);
+				var target = e.target;
+				switch(target.id){
+					case "unshift":
+						arr.unshift(input);
+						break;
+					case "push":
+						arr.push(input);
+						break;
+					case "pop":
+						alert(arr.pop(input));
+						break;
+					case "shift":
+						alert(arr.shift(input));
+						break;
+				}
+				// console.log(arr);
+				refresh();
+			})	
+		}
+
+		$("input").value="";
+		$("input").focus();
+
+		// 点击删除
+		$("#display").addEventListener("click",function(e){
+			var target = e.target;
+			if(target.nodeName.toLowerCase() === "span"){
+				var index = 0;
+				while(target = target.previousElementSibling){
+					++index;
+				}
+				// console.log(index);
+				arr.splice(index,1);
+				refresh();
+			}
+		})
+
+		// 随机数组
+		$("#random").addEventListener("click",function(){
+			for(let i=0;i<60;i++){
+				arr[i] = Math.floor(Math.random()*90+10);
+			}
+			refresh();
+		})
+		//  可视化排序
+		$("#sort").addEventListener("click",function(){
+			var i= 0;
+			var j=1;
+			var timer = setInterval(sort,50);
+			function sort(){
+				if(i<arr.length){
+					if(j<arr.length){
+						if(arr[i]<arr[j]){
+							var temp = arr[i];
+							arr[i] = arr[j];
+							arr[j] = temp;
+						}
+
+						refreshChart();
+
+						// 样式开始
+						var ospan = $("#chart").getElementsByTagName("span");
+						for(let i=0;i<ospan.length;i++){
+							ospan[i].className="";
+						}
+						ospan[i].className="active";
+						ospan[j].className="active";
+						// 样式结束
+
+						j++;
+						return;	
+					}
+					i++;
+					j = i+1;
+				}else{
+					clearInterval(timer);
+				}
+			}
+		});
+
+	</script>
+</body>
+</html>
