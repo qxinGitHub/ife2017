@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>二叉树 一</title>
+	<style>
+		div{
+			display: flex;
+			flex-grow: 1;
+			justify-content: space-between;
+			padding: 20px;
+			border: 1px solid #ccc;
+			margin: 5px;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<button id="dlr">前序遍历</button>
+	<button id="ldr">中序遍历</button>
+	<button id="lrd">后续遍历</button>
+	<button id="re">还原</button>
+	<div class="root">
+		<div>
+			<div>
+				<div></div>
+				<div></div>
+			</div>
+			<div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+		<div>
+			<div>
+				<div></div>
+				<div></div>
+			</div>
+			<div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function $(ele){return document.querySelector(ele);}
+		// 前序遍历
+		function dlr(node){
+			if(node){
+				arr.push(node);
+				arguments.callee(node.firstElementChild);
+				arguments.callee(node.lastElementChild);
+			}
+		}
+		// 中序遍历
+		function ldr(node){
+			if(node){
+				arguments.callee(node.firstElementChild);
+				arr.push(node);
+				arguments.callee(node.lastElementChild);
+			}
+		}
+		// 后序遍历
+		function lrd(node){
+			if(node){
+				arguments.callee(node.firstElementChild);
+				arguments.callee(node.lastElementChild);
+				arr.push(node);
+			}
+		}
+
+		function changeColor(){
+			var i = 0;
+			timer = setInterval(function(){
+				if(i<arr.length){
+					arr[i].style.backgroundColor="red";
+					i++;
+				}else{
+					clearInterval(timer);
+				}
+			},500)
+		}
+		// 重置所有
+		function reColor(){
+			if(timer){
+				clearInterval(timer);
+			}
+			for(let i=0;i<arr.length;i++){
+				arr[i].style.backgroundColor="#fff";
+			}
+			arr = [];
+		}
+
+		var arr = [];
+		var timer;
+		$("#dlr").addEventListener("click",function(){
+			reColor();
+			dlr($(".root"));
+			changeColor();
+		})
+		$("#ldr").addEventListener("click",function(){
+			reColor();
+			ldr($(".root"));
+			changeColor();
+		})
+		$("#lrd").addEventListener("click",function(){
+			reColor();
+			lrd($(".root"));
+			changeColor();
+		})
+		$("#re").addEventListener("click",reColor)
+	</script>
+</body>
+</html>
