@@ -22,7 +22,7 @@
 	<button id="re">还原</button>
 	<br>
 	<input id="s" type="text"><button id="sbtn" disabled>此按钮无效,点上面的遍历即可搜索</button>
-	<p></p>
+	<p>未按题目中要求:内容一致的节点<br>含关键词即能查到</p>
 
 	<div class="root">0 blank
 		<div>1 aqua
@@ -49,6 +49,8 @@
 			<div>2-3 white</div>
 		</div>
 	</div>
+
+	<h2 id="s-tag"></h2>
 
 	<script>
 		function $(ele){return document.querySelector(ele);}
@@ -90,6 +92,7 @@
 					// 搜索 开始
 					if(search.length>0 && ~arr[i].firstChild.nodeValue.indexOf(search)){
 						arr[i].style.backgroundColor="red";
+						sTag ++;
 					}else{
 						arr[i].style.backgroundColor="aqua";
 					}
@@ -97,12 +100,20 @@
 					i++;
 				}else{
 					clearInterval(timer);
+
+					// if(sTag){alert("未找到搜索内容!")}
+					console.log(search,search.length)
+					$("#s-tag").innerHTML = sTag
+											? "共找到 " + sTag + "项"
+											: search.length<=0 ? ""
+															   :"未找到该搜索内容: " + search ;
 				}
 			},500)
 		}
 		// 重置所有
 		function reColor(){
 			search = $("#s").value;
+			sTag = 0;
 			if(timer){
 				clearInterval(timer);
 			}
@@ -114,6 +125,7 @@
 
 		var arr = [];
 		var search = "";
+		sTag = 0;
 		var timer;
 		$("#dlr").addEventListener("click",function(){
 			reColor();
