@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>08-二叉树(二)</title>
+	<style>
+		div{
+			display: flex;
+			flex-grow: 1;
+			justify-content: space-between;
+			padding: 5px;
+			border: 1px solid #ccc;
+			margin: 5px;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<button id="dlr">前序遍历</button>
+	<button id="ldr" disabled="">中序遍历不会</button>
+	<button id="lrd">后续遍历</button>
+	<button id="re">还原</button>
+	<br>
+	<input id="s" type="text"><button id="sbtn" disabled>此按钮无效,点上面的遍历即可搜索</button>
+	<p></p>
+
+	<div class="root">0 blank
+		<div>1 aqua
+			<div>1-1 blue
+				<div>1-1-1 fuchsia</div>
+				<div>1-1-2 gray</div>
+			</div>
+			<div>1-2
+				<div>1-2-1 green</div>
+				<div>1-2-2 lime</div>
+				<div>1-2-2 fuchsia</div>
+			</div>
+			<div>1-3 yellow
+				
+			</div>
+		</div>
+		<div>2 maroon
+			<div>2-1 navy
+				<div>2-1-1 olive</div>
+				<div>2-1-2 purple</div>
+				<div>2-1-3 red</div>
+			</div>
+			<div>2-2 silver</div>
+			<div>2-3 white</div>
+		</div>
+	</div>
+
+	<script>
+		function $(ele){return document.querySelector(ele);}
+		// 前序遍历
+		function dlr(node){
+			if(node){
+				// console.log(node.firstChild.nodeValue);
+				arr.push(node);
+				// console.log(node.children);
+				// arguments.callee(node.firstElementChild);
+				// arguments.callee(node.lastElementChild);
+				for(let i=0;i<node.children.length;i++){
+					arguments.callee(node.children[i]);
+				}
+			}
+		}
+		// 中序遍历
+		function ldr(node){
+			if(node){
+				arguments.callee(node.firstElementChild);
+				arr.push(node);
+				arguments.callee(node.lastElementChild);
+			}
+		}
+		// 后序遍历
+		function lrd(node){
+			if(node){
+				for(let i=0;i<node.children.length;i++){
+					arguments.callee(node.children[i]);
+				}
+				arr.push(node);
+			}
+		}
+
+		function changeColor(){
+			var i = 0;
+			timer = setInterval(function(){
+				if(i<arr.length){
+					// 搜索 开始
+					if(search.length>0 && ~arr[i].firstChild.nodeValue.indexOf(search)){
+						arr[i].style.backgroundColor="red";
+					}else{
+						arr[i].style.backgroundColor="aqua";
+					}
+					// 搜索结束
+					i++;
+				}else{
+					clearInterval(timer);
+				}
+			},500)
+		}
+		// 重置所有
+		function reColor(){
+			search = $("#s").value;
+			if(timer){
+				clearInterval(timer);
+			}
+			for(let i=0;i<arr.length;i++){
+				arr[i].style.backgroundColor="#fff";
+			}
+			arr = [];
+		}
+
+		var arr = [];
+		var search = "";
+		var timer;
+		$("#dlr").addEventListener("click",function(){
+			reColor();
+			dlr($(".root"));
+			changeColor();
+		})
+		$("#ldr").addEventListener("click",function(){
+			reColor();
+			ldr($(".root"));
+			changeColor();
+		})
+		$("#lrd").addEventListener("click",function(){
+			reColor();
+			lrd($(".root"));
+			changeColor();
+		})
+		$("#re").addEventListener("click",reColor)
+
+		// 搜索
+		// $("#sbtn").addEventListener("click",function(){
+		// 	var search = $("#s");
+
+		// })
+	</script>
+</body>
+</html>
