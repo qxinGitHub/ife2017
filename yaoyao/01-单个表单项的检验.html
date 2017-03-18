@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单个表单项的检验</title>
+</head>
+<body>
+	<form action="" onsubmit="return validate(this)">
+		名称: <input name="email" type="text" id="mail"> <input onclick="return false;" id="input" type="submit" value="验证">
+	</form>
+	<h3>必填,长度为4-16个字符</h3>
+	<script>
+		function $(ele){return document.querySelector(ele);}
+		function validate(value){
+			value = value.replace( /[\u4e00-\u9f5a]/g,"cn");
+			if(value.length<=0){
+				validateC("姓名不能为空");
+			}else if(value.length<4 || value.length>16){
+				validateC("长度需要在4-16个字符之间!");
+			}else{
+				validateC("名称格式正确","#61BC45");
+			}
+			return false;
+		}
+		function validateC(text,color){
+			h3 = document.querySelector("h3");
+			h3.innerHTML = text;
+			color = color?color:"#DD000F"
+			h3.style.color=color;
+			document.querySelector("#mail").style.borderColor=color;
+		}
+		$("#input").addEventListener("click",function(){
+			var value = $("#mail").value;
+			validate(value);
+		})
+		$("#mail").onfocus =function(){ validateC("必填,长度为4-16个字符","#B5B5B5");}
+	</script>
+</body>
+</html>
