@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单联动</title>
+	<style>
+		.hide{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="isStudent" onchange="isStudent()">
+		<label><input type="radio" name="student" id="isS" checked> 在校生</label>
+		<label><input type="radio" name="student" id="notS"> 非在校生</label>
+	</div>
+	<div class="select1">
+		学校
+		<select name="" id="city" onchange="changeCity()">
+			<option value="bj">北京</option>
+			<option value="sh">上海</option>
+			<option value="ly">临沂</option>
+		</select>
+		<select name="" id="school">
+		</select>
+	</div>
+	<div class="select2 hide">
+		就业单位 <input type="text">
+	</div>
+	<script>
+		function $(ele){return document.querySelector(ele);}
+		function isStudent(){
+			$(".select1").classList.toggle("hide");
+			$(".select2").classList.toggle("hide");
+		}
+		function changeCity(){
+			var index = $("#city").selectedIndex;
+			var school = $("#school");
+			school.innerHTML = "";
+			for(let i=0;i<schoolList[index].length;i++){
+				var node = document.createElement("option");
+				node.innerHTML = schoolList[index][i];
+				school.appendChild(node);
+			}
+		}
+		var schoolList = [["北京大学","清华大学","首都师范大学"],["上海大学","复旦大学","交通大学"],["临沂大学"]];
+		changeCity();
+	</script>
+</body>
+</html>
