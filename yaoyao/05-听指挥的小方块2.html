@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>听指挥的小方块二</title>
+	<style>
+		ul{
+			margin: 0;
+			padding: 0;
+			width: 500px;
+			height: 500px;
+			position: absolute;
+			display: flex;
+			justify-content: space-around;
+			
+		}
+		li{
+			list-style: none;
+			display: inline-block;
+		}
+		.wrap{
+			width: 500px;
+			height: 500px;
+			margin-top: 100px;
+			margin-left: 50%;
+			transform: translate(-50%,0);
+			position: relative;
+		}
+		.col{
+			display: flex;
+			flex-direction: column;
+			transform: translate(-30px,0px);
+		}
+		.row{
+			top: -30px;
+		}
+		table{
+			border-collapse:collapse;
+		}
+		td{
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			width: 50px;
+			height: 50px;
+		}
+		.box{
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			box-sizing: border-box;
+			background-color: blue;
+			position: absolute;
+			top: 250px;
+			left: 250px;
+			border: 10px solid red;
+			border-width: 10px 0 0 0;
+			transform: rotate(0deg);
+			transition: .2s;
+		}
+		.top{
+			border-width: 10px 0 0 0;
+		}
+		.right{
+			border-width: 0 10px 0 0;
+		}
+		.bottom{
+			border-width: 0 0 10px 0;
+		}
+		.left{
+			border-width: 0 0 0 10px;
+		}
+		#tip{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" value="TUN LEF" id="lef">
+	<input type="button" value="TUN RIG" id="rig">
+	<input type="button" value="TUN BAC" id="bac">
+	<input type="button" value="GO" id="go">
+	<br><br>
+	<input type="button" value="TRA LEF" id="tralef">
+	<input type="button" value="TRA TOP" id="tratop">
+	<input type="button" value="TRA RIG" id="trarig">
+	<input type="button" value="TRA BOT" id="trabot">
+	<br><br>
+	<input type="button" value="MOV LEF" id="movlef">
+	<input type="button" value="MOV TOP" id="movtop">
+	<input type="button" value="MOV RIG" id="movrig">
+	<input type="button" value="MOV BOT" id="movbot">
+
+	<br><br>
+	<p>点击上面按钮,或在下面输入上面按钮的指令</p>
+	<input type="text" id="order"><input type="button" value="执行" id="orderBtn">
+	<div class="wrap">
+		<div>
+			<ul class="row">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+				<li>8</li>
+				<li>9</li>
+				<li>10</li>
+			</ul>
+		</div>
+		<div>
+			<ul class="col">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+				<li>8</li>
+				<li>9</li>
+				<li>10</li>
+			</ul>
+		</div>
+		<table>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		<span id="box" class="box"></span>
+	</div>
+	<h3 id="tip"></h3>
+	<script>
+		function $(ele){return document.querySelector(ele);}
+		function $$(ele){return document.querySelectorAll(ele);}
+
+		// 获取角度
+		function getDeg(){
+			reg = /rotate\(([\-\+]?\d+)(deg)\)/i;
+			box.style.transform.match(reg);
+			return parseInt(RegExp.$1);
+		}
+		// 获取方向
+		function getDirection(value){
+			// var deg = getDeg();
+			// value = value ? value : getDeg()%360
+			// console.log(deg%360);
+			switch(getDeg()%360){
+				// case "GO":
+				case 0: boxMove(-50,0);break;
+				// case "TUN RIG":
+				case 90:
+				case -270: boxMove(0,50);break;
+				// case "TUN BAC":
+				case 180:
+				case -180:boxMove(50,0);break;
+				// case "TUN LEF":
+				case 270:
+				case -90: boxMove(0,-50);break;
+			}
+		}
+		// 移动
+		function boxMove(top,left){
+			var boxTop = parseInt(box.style.top) + top ;
+			var boxLeft = parseInt(box.style.left) + left ;
+			console.log(boxTop,boxLeft)
+			if(boxTop>=500 || boxTop<0 || boxLeft<0 ||boxLeft>=500){
+				$("#tip").innerHTML = "超出边界";
+				// break;
+			}else{	
+				$("#tip").innerHTML = "";
+			box.style.top = boxTop + "px";
+			box.style.left = boxLeft +"px";
+			}
+		}
+
+		// 按键绑定函数
+		$("#lef").addEventListener("click",function(){
+			boxDeg = getDeg() - 90;
+			box.style.transform = "rotate(" + boxDeg + "deg)";
+		})
+		$("#rig").addEventListener("click",function(){
+			boxDeg = getDeg() + 90;
+			box.style.transform = "rotate(" + boxDeg + "deg)";
+		})
+		$("#bac").addEventListener("click",function(){
+			boxDeg = getDeg() + 180;
+			box.style.transform = "rotate(" + boxDeg + "deg)";
+		})
+		$("#go").addEventListener("click",function(){
+			getDirection();
+		})
+		// 任务二
+		var btnList = $$("input");
+		for(let i=0;i<btnList.length;i++){
+			btnList[i].addEventListener("click",function(e){
+				var target = e.target.value;
+				var go = $("#go");
+				switch(target){
+					case "TRA LEF": boxMove(0,-50);break;
+					case "TRA TOP": boxMove(-50,0);break;
+					case "TRA RIG": boxMove(0,50);break;
+					case "TRA BOT": boxMove(50,0);break;
+					case 'MOV LEF':
+							box.style.transform = "rotate(270deg)"; 
+							$("#tralef").click();break;
+					case 'MOV TOP': 
+							box.style.transform = "rotate(0deg)"; 
+							$("#tratop").click();break;
+					case 'MOV RIG': 
+							box.style.transform = "rotate(90deg)"; 
+							$("#trarig").click();break;
+					case 'MOV BOT': 
+							box.style.transform = "rotate(180deg)"; 
+							$("#trabot").click();break;
+				}
+			})
+		}
+
+		// 执行命令
+		$("#orderBtn").addEventListener("click",function(){
+			var order = $("#order").value.toUpperCase();
+			console.log(order);
+			switch(order){
+				case "GO":$("#go").click();break;
+				case "TUN LEF":$("#lef").click();break;
+				case "TUN RIG":$("#rig").click();break;
+				case "TUN BAC":$("#bac").click();break;
+
+				case "TRA LEF": $("#tralef").click();break;
+				case "TRA TOP": $("#tratop").click();break;
+				case "TRA RIG": $("trarig").click();break;
+				case "TRA BOT": $("trabot").click();break;
+
+				case "MOV LEF": $("#movlef").click();break;
+				case "MOV TOP": $("#movtop").click();break;
+				case "MOV RIG": $("#movrig").click();break;
+				case "MOV BOT": $("#movbot").click();break;
+			}
+
+		})
+
+		// 初始化方块
+		var box = $(".box");
+		box.style.left = "250px";
+		box.style.top = "250px";
+		box.style.transform = "rotate(0deg)"
+
+
+	</script>
+</body>
+</html>
