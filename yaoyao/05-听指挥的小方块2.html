@@ -21,7 +21,7 @@
 		.wrap{
 			width: 500px;
 			height: 500px;
-			margin-top: 100px;
+			/*margin-top: 100px;*/
 			margin-left: 50%;
 			transform: translate(-50%,0);
 			position: relative;
@@ -71,6 +71,8 @@
 		}
 		#tip{
 			color: red;
+			position: absolute;
+			top: -20px;
 		}
 	</style>
 </head>
@@ -245,8 +247,8 @@
 			</tr>
 		</table>
 		<span id="box" class="box"></span>
-	</div>
 	<h3 id="tip"></h3>
+	</div>
 	<script>
 		function $(ele){return document.querySelector(ele);}
 		function $$(ele){return document.querySelectorAll(ele);}
