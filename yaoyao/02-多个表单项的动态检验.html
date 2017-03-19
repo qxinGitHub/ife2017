@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多个表单项的动态的检验</title>
+	<style>
+		.form{
+			font-size: 20px;
+		}
+		.form input{
+			padding-left: 5px;
+			border-style: solid;
+			border-color:  #ccc;
+			border-radius: 5px;
+			height: 30px;
+			width: 200px;
+			margin: 15px 0;
+			outline: none;
+		}
+		p{
+			display: none;
+			margin: -10px 0 10px 215px;
+			color: #A6A6A6;
+		}
+		span{
+			display: inline-block;
+			width: 200px;
+			text-align: right;
+			margin-right: 10px;
+			color: #323232;
+			font-weight: bold;
+		}
+		button{
+			font-size: 24px;
+			padding: 5px 20px;
+			border: 1px solid #2F79BA;
+			border-radius: 5px;
+			margin:100px 0 0 320px; 
+			color: #fff;
+			background-color: #2F79BA;
+			outline: none;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="form">
+		<div class="name">
+			<span>名称</span>
+			<input type="text">
+			<p data-tip="必填,长度为4-16个字符"></p>
+		</div>
+		<div class="password">
+			<span>密码</span>
+			<input type="password">
+			<p data-tip="必填,长度为8-16个字符"></p>
+		</div>
+		<div class="checkpassword">
+			<span>密码确认</span>
+			<input type="password">
+			<p data-tip="再次输入相同的密码"></p>
+		</div>
+		<div class="email">
+			<span>邮箱</span>
+			<input type="text">
+			<p data-tip="请输入邮箱地址"></p>
+		</div>
+		<div class="phone">
+			<span>手机</span>
+			<input type="text">
+			<p data-tip="请输入手机号码"></p>
+		</div>
+	</div>
+	<button>提交</button>
+
+	<script>
+		function $(ele){return document.querySelector(ele);}
+		function $$(ele,parentEle){
+			return parentEle?parentEle.querySelectorAll(ele)
+							:document.querySelectorAll(ele);
+		}
+		// 变换颜色
+		function changeTip(tipT,tipC,borderC){
+			// console.log(this,this[1]);
+			borderC = borderC ? borderC : tipC ;
+			this[1].style.borderColor=borderC;
+			this[2].innerHTML = tipT;
+			this[2].style.color = tipC;
+			this[2].style.display = "block";
+		}
+		// 输入检测
+		function nameCheck(value){
+			console.log(this);
+			// console.log(value);
+			value = value.replace(/[\u4e00-\u9f5a]/g,"cn");
+			var vLength = value.length;
+			if(vLength<=0){
+				changeTip.call(this,"名称不能为空","#D7000A");
+				check[0].pass=false;
+			}else if(vLength<4 || vLength>16){
+				changeTip.call(this,"长度必须在4-16个字符之间","#D7000A");
+				check[0].pass=false;
+			}else{
+				changeTip.call(this,"用户名可用","#56B537");
+				check[0].pass=true;
+			}
+		}
+		function passwordCheck(value){
+			value = value.replace(/[\u4e00-\u9f5a]/g,"cn");
+			var vLength = value.length;
+			if(vLength<=0){
+				changeTip.call(this,"密码不能为空","#D7000A");
+				check[1].pass=false;
+			}else if(vLength<8 || vLength>16){
+				changeTip.call(this,"长度必须在8-16个字符之间","#D7000A");
+				check[1].pass=false;
+			}else{
+				changeTip.call(this,"密码可用","#56B537");
+				check[1].pass=true;
+			}
+		}
+		function password2Check(value){
+			var password = $(".password input").value;
+			if(value == password && password.length>7){
+				changeTip.call(this,"密码输入一致","#56B537");
+				check[2].pass = true;
+			}else{
+				check[2].pass = false;
+				 changeTip.call(this,"请输入相同的密码","#D7000A");
+			}
+		}
+		function mailCheck(value){
+			var reg =/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/g;
+			// console.log(value,value.trim(),reg.test(value.trim()))
+			if(reg.test(value.trim())){
+				changeTip.call(this,"邮箱可用","#56B537");
+				check[3].pass = true;
+			}else{
+				check[3].pass = false;
+				changeTip.call(this,"请输入正确的邮箱","#D7000A");
+			}
+		}
+		function phoneCheck(value){
+			var reg = /^1[0-9]{10}$/g;
+			if (reg.test(value)){
+				changeTip.call(this,"手机可用","#56B537");
+				check[4].pass = true;
+			}else{
+				check[4].pass = false;
+				changeTip.call(this,"请输入正确的大陆手机号","#D7000A");
+			}
+		}
+
+
+		// 绑定事件
+		var check = [{pass:false},{pass:false},{pass:false},{pass:false},{pass:false}];
+		var input = $$("input");
+		for(let i=0;i<input.length;i++){
+			input[i].addEventListener("focus",function(){
+				var tipNode = input[i].nextElementSibling;
+				changeTip.call($$("*",input[i].parentNode),tipNode.dataset.tip,"#ABABAB","#61ADEB");
+				tipNode.style.display="block";
+
+			})
+			input[i].addEventListener("blur",function(){
+				var that = $$("*",input[i].parentNode)
+				switch(input[i].parentNode.className){
+					case "name":nameCheck.call(that,input[i].value);break;
+					case "password":passwordCheck.call(that,input[i].value);break;
+					case "checkpassword":password2Check.call(that,input[i].value);break;
+					case "email":mailCheck.call(that,input[i].value);break;
+					case "phone":phoneCheck.call(that,input[i].value);break;
+				}
+			})
+		}
+
+		$("button").addEventListener("click",function(){
+			// 此处提交时应该对输入的内容再检查一遍, 于是就玩脱了
+			var input = $$("input");
+			nameCheck.call($$("*",input[0].parentNode),input[0].value);
+			passwordCheck.call($$("*",input[1].parentNode),input[1].value);
+			password2Check.call($$("*",input[2].parentNode),input[2].value);
+			mailCheck.call($$("*",input[3].parentNode),input[3].value);
+			phoneCheck.call($$("*",input[4].parentNode),input[4].value);
+			//  end
+
+			var flag = check.every(function(item){
+				// console.log(item);
+				return item.pass;
+			})
+			if(flag){
+				alert("输入正确");
+			}else{
+				alert("输入有误");
+			}
+		})
+		
+
+	</script>
+</body>
+</html>
