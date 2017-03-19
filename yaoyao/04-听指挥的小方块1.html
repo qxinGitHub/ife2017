@@ -69,6 +69,9 @@
 		.left{
 			border-width: 0 0 0 10px;
 		}
+		#tip{
+			color: red;
+		}
 	</style>
 </head>
 <body>
@@ -231,6 +234,7 @@
 		</table>
 		<span id="box" class="box"></span>
 	</div>
+	<h3 id="tip"></h3>
 	<script>
 		function $(ele){return document.querySelector(ele);}
 
@@ -261,8 +265,17 @@
 		}
 		// 移动
 		function boxMove(top,left){
-			box.style.top = parseInt(box.style.top) + top + "px";
-			box.style.left = parseInt(box.style.left) + left +"px";
+			var boxTop = parseInt(box.style.top) + top ;
+			var boxLeft = parseInt(box.style.left) + left ;
+			console.log(boxTop,boxLeft)
+			if(boxTop>=500 || boxTop<0 || boxLeft<0 ||boxLeft>=500){
+				$("#tip").innerHTML = "超出边界";
+				// break;
+			}else{	
+				$("#tip").innerHTML = "";
+			box.style.top = boxTop + "px";
+			box.style.left = boxLeft +"px";
+			}
 		}
 
 		// 按键绑定函数
