@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>浮出层</title>
+	<style>
+		.login{
+			color: #fff;
+			margin: 30px 0 0 50%; 
+			transform: translate(-50%,0);
+			display: inline-block;
+			background-color: #006FFF;
+			padding: 5px 10px;
+			border-radius: 10px;
+			border: 1px solid #ccc;
+			cursor: pointer;
+		}
+		.cover{
+			text-align: center;
+			border-radius: 10px;
+			user-select:none;
+		}
+		.coverBtn{
+			width: 100%;
+			display: flex;
+			justify-content: space-around;
+			position: absolute;
+			bottom: 20px;
+		}
+		input{
+			color: #fff;
+			letter-spacing: 2px;
+			padding: 5px 20px;
+			border: none;
+			border-radius: 10px;
+			outline: none;
+			cursor: pointer;
+		}
+		#enter{
+			background-color: #33CB96;
+		}
+		#cancel{
+			background-color: #D92570;
+		}
+	</style>
+</head>
+<body>
+	<div class="login">浮出层</div>
+	<div class="cover">
+		<h3>浮出层</h3>
+		<p>点击标题可拖动</p>
+		<div class="coverBtn">
+			<input type="button" value="确定" id="enter">
+			<input type="button" value="取消" id="cancel">
+		</div>
+	</div>
+	<script>
+		function $(ele){return document.querySelector(ele);}
+
+		var floatLayer = function(ele){
+			this.ele = ele;
+			this.mask = null;
+			this.init();
+			// this.hide();
+		}
+		floatLayer.prototype = {
+			init:function(){
+				// console.log(this);
+				// 浮出层背景
+				this.mask = document.createElement("div");
+				this.mask.style.backgroundColor="rgba(0,0,0,.8)";
+				this.mask.style.position = "absolute";
+				this.mask.style.top = 0;
+				this.mask.style.left = 0;
+				this.mask.style.bottom = 0;
+				this.mask.style.right = 0;
+				// 浮出层提示框
+				this.ele.style.backgroundColor = "#fff";
+				this.ele.style.width = "500px";
+				this.ele.style.height = "300px";
+				this.ele.style.position	= "absolute";
+				this.ele.style.top = "50%";
+				this.ele.style.left = "50%";
+				this.ele.style.transform = "translate(-50%,-50%)";
+
+				// 添加到 body
+				this.mask.appendChild(this.ele);
+				document.body.appendChild(this.mask);
+
+				// 添加事件
+				var that = this;
+				this.mask.addEventListener("click",function(){
+					that.mask.style.display = "none";
+				});
+				// 阻止冒泡
+				this.ele.addEventListener("click",function(e){
+					e.stopPropagation();
+				});
+				this.setdrag(this.ele.children[0]);
+			},
+			hide:function(){
+				this.mask.style.display = "none";
+			},
+			show:function(){
+				this.mask.style.display = "block";
+				this.ele.style.top = "50%";
+				this.ele.style.left = "50%";
+			},
+			// 拖拽
+			setdrag:function(node){
+				console.log(this.ele.offsetTop);
+				// console.log(node);
+				var mouseOffsetX = 0;  //鼠标初始偏移值
+				var mouseOffsetX = 0;
+				var isdraging = false;
+				var that = this ;
+				//  鼠标事件一 - 鼠标在标题栏按下时
+				node.addEventListener("mousedown",function(event){
+					event = event || window.event ; 
+					mouseOffsetX = event.clientX - that.ele.offsetLeft;
+					mouseOffsetY = event.clientY - that.ele.offsetTop;
+					console.log(mouseOffsetX,mouseOffsetY);
+					isdraging = true;
+				})
+				// 鼠标事件二 - 鼠标移动时
+				document.addEventListener("mousemove",function(event){
+					event = event || window.event ; 
+
+					var mouseX = event.clientX;  //鼠标当前位置
+					var mouseY = event.clientY;
+
+					var moveX = 0;  //浮层新位置
+					var moveY = 0;
+
+					if(isdraging){
+						moveX = mouseX - mouseOffsetX;
+						moveY = mouseY - mouseOffsetY;
+
+						// 范围限定, moveX > 0 并且小于页面最大宽度-浮层宽度
+						// 由于用了 translate, 距离有点问题, 最大最小都需要加上宽高的一半
+						var pageWidth = document.documentElement.clientWidth;
+						var pageHeight = document.documentElement.clientHeight;
+
+						var dialogWidth = that.ele.offsetWidth; //拖拽窗口的宽高
+						var dialogHeight = that.ele.offsetHeight;
+
+						var maxX = pageWidth - dialogWidth;	//最大拖拽宽高
+						var maxY = pageHeight - dialogHeight;
+
+						moveX = Math.min( maxX+250,Math.max(250,moveX));
+						moveY = Math.min( maxY+150,Math.max(150,moveY));
+
+
+						that.ele.style.left = moveX + "px";
+						that.ele.style.top = moveY + "px";
+					}
+				})
+				// 鼠标事件三 - 鼠标松开时
+				document.addEventListener("mouseup",function(){
+					isdraging = false;
+				})
+			}
+		}
+
+		var c = new floatLayer($(".cover"));
+		$(".login").addEventListener("click",function(){c.show();});
+		$("#cancel").addEventListener("click",function(){c.hide();});
+		$("#enter").addEventListener("click",function(){c.hide();});
+	</script>
+</body>
+</html>
